@@ -2,6 +2,24 @@
 let contentData = {};
 let isAuthenticated = false;
 
+// GitHub API Configuration
+const GITHUB_CONFIG = {
+    // These will be set via environment variables in Vercel
+    token: null, // Will be loaded from environment
+    owner: 'RCBibwewadi', // Replace with your GitHub username
+    repo: 'web', // Replace with your repository name
+    filePath: 'data/content.json'
+};
+
+// Initialize GitHub config (you'll set this up in Vercel environment variables)
+function initGitHubConfig() {
+    // For development, you can temporarily set values here
+    // In production, these should come from Vercel environment variables
+    GITHUB_CONFIG.token = window.GITHUB_TOKEN || null; // Set via Vercel env vars
+    GITHUB_CONFIG.owner = window.GITHUB_OWNER || 'RCBibwewadi'; // Your GitHub username
+    GITHUB_CONFIG.repo = window.GITHUB_REPO || 'web'; // Your repo name
+}
+
 // Image upload functionality
 function createImageUploader(inputId, currentValue = '') {
     const uploaderId = `uploader-${inputId}`;
@@ -942,6 +960,124 @@ function deleteEvent(index) {
     }
 }
 
+// Push changes to GitHub and trigger website update
+async function pushChangesToWebsite() {
+    console.log('🚀 Starting push to website...');
+    
+    // Initialize GitHub config
+    initGitHubConfig();
+    
+    if (!GITHUB_CONFIG.token) {
+        showNotification('GitHub token not configured. Please contact administrator.', 'error');
+        return;
+    }
+    
+    const pushButton = document.getElementById('push-to-website-btn');
+    const originalContent = pushButton.innerHTML;
+    
+    try {
+        // Show loading state
+        pushButton.disabled = true;
+        pushButton.innerHTML = `
+            <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            <span>Pushing...</span>
+        `;
+        
+        showNotification('Preparing to push changes to website...', 'success');
+        
+        // Convert contentData to formatted JSON
+        const jsonContent = JSON.stringify(contentData, null, 2);
+        const encodedContent = btoa(unescape(encodeURIComponent(jsonContent))); // Proper UTF-8 encoding
+        
+        console.log('📝 Content prepared for GitHub commit');
+        
+        // Step 1: Get current file to obtain SHA
+        console.log('📡 Getting current file information...');
+        const getFileResponse = await fetch(
+            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.filePath}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': `token ${GITHUB_CONFIG.token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'User-Agent': 'Rotaract-Admin-Dashboard'
+                }
+            }
+        );
+        
+        if (!getFileResponse.ok) {
+            const errorData = await getFileResponse.json();
+            throw new Error(`Failed to get file info: ${errorData.message || getFileResponse.statusText}`);
+        }
+        
+        const fileData = await getFileResponse.json();
+        console.log('✅ File information retrieved');
+        
+        // Step 2: Update the file
+        console.log('📡 Committing changes to GitHub...');
+        const commitMessage = `Update content from admin dashboard - ${new Date().toLocaleString()}`;
+        
+        const updateResponse = await fetch(
+            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.filePath}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${GITHUB_CONFIG.token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Rotaract-Admin-Dashboard'
+                },
+                body: JSON.stringify({
+                    message: commitMessage,
+                    content: encodedContent,
+                    sha: fileData.sha,
+                    committer: {
+                        name: 'Rotaract Admin',
+                        email: 'admin@rotaract.local'
+                    }
+                })
+            }
+        );
+        
+        if (!updateResponse.ok) {
+            const errorData = await updateResponse.json();
+            throw new Error(`Failed to commit changes: ${errorData.message || updateResponse.statusText}`);
+        }
+        
+        const commitData = await updateResponse.json();
+        console.log('✅ Changes committed to GitHub successfully!');
+        console.log('🔗 Commit URL:', commitData.commit.html_url);
+        
+        // Success notification
+        showNotification('🎉 Changes pushed successfully! Website will update in 1-2 minutes.', 'success');
+        
+        // Also save to localStorage for immediate local preview
+        localStorage.setItem('rotaract_content_backup', JSON.stringify(contentData));
+        
+        setTimeout(() => {
+            showNotification('🌐 Your changes are now live on the website!', 'success');
+        }, 90000); // Notify after 1.5 minutes
+        
+    } catch (error) {
+        console.error('❌ Error pushing to GitHub:', error);
+        showNotification(`Failed to push changes: ${error.message}`, 'error');
+        
+        // Fallback to localStorage save
+        try {
+            localStorage.setItem('rotaract_content_backup', JSON.stringify(contentData));
+            showNotification('Changes saved locally as fallback.', 'warning');
+        } catch (localError) {
+            console.error('❌ Even localStorage save failed:', localError);
+        }
+    } finally {
+        // Restore button state
+        pushButton.disabled = false;
+        pushButton.innerHTML = originalContent;
+    }
+}
+
 // Save to JSON (seamless auto-update without downloads)
 function saveToJSON() {
     console.log('💾 Starting saveToJSON process...');
@@ -990,30 +1126,48 @@ function saveToJSON() {
     }
 }
 
-// Enhanced notification system for seamless workflow
+// Enhanced notification system with more types
 function showNotification(message, type) {
-    // Create a styled notification instead of alert
     const notification = document.createElement('div');
-    const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-    notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transition-all duration-300`;
+    let bgColor = 'bg-gray-500';
+    let icon = '';
+    
+    switch(type) {
+        case 'success':
+            bgColor = 'bg-green-500';
+            icon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+            break;
+        case 'error':
+            bgColor = 'bg-red-500';
+            icon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>';
+            break;
+        case 'warning':
+            bgColor = 'bg-orange-500';
+            icon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>';
+            break;
+        default:
+            bgColor = 'bg-blue-500';
+            icon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+    }
+    
+    notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transition-all duration-300 max-w-md`;
     notification.innerHTML = `
         <div class="flex items-center">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                ${type === 'success' ? 
-                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>' :
-                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>'
-                }
+                ${icon}
             </svg>
             <div>
                 <div class="font-semibold">${message}</div>
-                ${type === 'success' ? '<div class="text-sm opacity-90">✨ No downloads needed - everything happens automatically!</div>' : ''}
+                ${type === 'success' && message.includes('pushed') ? '<div class="text-sm opacity-90">✨ Check your website in 1-2 minutes!</div>' : ''}
+                ${type === 'success' && !message.includes('pushed') ? '<div class="text-sm opacity-90">✨ No downloads needed - everything happens automatically!</div>' : ''}
             </div>
         </div>
     `;
     
     document.body.appendChild(notification);
     
-    // Remove notification after 4 seconds
+    // Remove notification after 5 seconds (longer for important messages)
+    const duration = type === 'success' && message.includes('pushed') ? 8000 : 4000;
     setTimeout(() => {
         notification.style.opacity = '0';
         setTimeout(() => {
@@ -1021,5 +1175,5 @@ function showNotification(message, type) {
                 notification.parentNode.removeChild(notification);
             }
         }, 300);
-    }, 4000);
+    }, duration);
 }
