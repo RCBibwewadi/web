@@ -13,11 +13,19 @@ const GITHUB_CONFIG = {
 
 // Initialize GitHub config (you'll set this up in Vercel environment variables)
 function initGitHubConfig() {
-    // For development, you can temporarily set values here
-    // In production, these should come from Vercel environment variables
-    GITHUB_CONFIG.token = window.GITHUB_TOKEN || null; // Set via Vercel env vars
-    GITHUB_CONFIG.owner = window.GITHUB_OWNER || 'RCBibwewadi'; // Your GitHub username
-    GITHUB_CONFIG.repo = window.GITHUB_REPO || 'web'; // Your repo name
+    // For now, we'll hardcode the values since environment variables in Vercel
+    // are not directly accessible in client-side JavaScript
+    // You'll need to provide your token here temporarily for testing
+    GITHUB_CONFIG.token = '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'; // Replace with your actual token
+    GITHUB_CONFIG.owner = 'RCBibwewadi'; // Your GitHub username
+    GITHUB_CONFIG.repo = 'web'; // Your repo name
+    
+    // Check if token is still placeholder
+    if (GITHUB_CONFIG.token === 'YOUR_GITHUB_TOKEN_HERE' || !GITHUB_CONFIG.token) {
+        console.warn('⚠️ GitHub token not configured properly');
+        return false;
+    }
+    return true;
 }
 
 // Image upload functionality
@@ -965,10 +973,11 @@ async function pushChangesToWebsite() {
     console.log('🚀 Starting push to website...');
     
     // Initialize GitHub config
-    initGitHubConfig();
+    const configValid = initGitHubConfig();
     
-    if (!GITHUB_CONFIG.token) {
-        showNotification('GitHub token not configured. Please contact administrator.', 'error');
+    if (!configValid) {
+        showNotification('GitHub token not configured. Please add your token to admin.js and redeploy.', 'error');
+        console.log('🛠️ To configure: Edit admin.js, replace YOUR_GITHUB_TOKEN_HERE with your actual token');
         return;
     }
     
