@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotaract Club of Bibwewadi Pune | From Solos to Symphony</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose-tan': '#D4A574',
+                        'rose-tan-light': '#E6BF94',
+                        'rose-tan-dark': '#B8956B',
+                        'mauve-wine': '#6B4C57',
+                        'mauve-wine-light': '#8B6B77',
+                        'mauve-wine-dark': '#4A3440',
+                        'luxury-cream': '#FAF7F4',
+                        'luxury-gold': '#D4AF37',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #D4A574 0%, #6B4C57 50%, #D4AF37 100%);
+        }
+        .luxury-gradient {
+            background: linear-gradient(135deg, #D4A574 0%, #6B4C57 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(250, 247, 244, 0.95);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+        }
+        .luxury-shadow {
+            box-shadow: 0 20px 25px -5px rgba(107, 76, 87, 0.1), 0 10px 10px -5px rgba(107, 76, 87, 0.04);
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+        }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #E5E7EB;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .calendar-day:hover {
+            background: #FAF7F4;
+            border-color: #D4A574;
+        }
+        .calendar-day.has-event {
+            background: linear-gradient(135deg, #D4A574 0%, #6B4C57 100%);
+            color: white;
+            font-weight: 600;
+        }
+        .calendar-day.other-month {
+            color: #9CA3AF;
+            background: #F9FAFB;
+        }
+    </style>
+</head>
+<body class="font-inter bg-luxury-cream">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect luxury-shadow">
+        <div class="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8">
+            <!-- Logo - Left Aligned -->
+            <div class="flex items-center space-x-3 flex-shrink-0">
+                <div id="club-logo-container" class="w-10 h-10 luxury-gradient rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">R</span>
+                </div>
+                <div class="hidden sm:block">
+                    <h1 class="text-lg font-semibold text-mauve-wine whitespace-nowrap">Rotaract Club of Bibwewadi Pune</h1>
+                    <p class="text-xs text-mauve-wine-light">From solos to symphony</p>
+                </div>
+            </div>
+            
+            <!-- Desktop Navigation - Right Aligned -->
+            <div class="hidden md:flex space-x-8 flex-shrink-0">
+                <a href="#home" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium">Home</a>
+                <a href="#about" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium">About</a>
+                <a href="#projects" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium">Projects</a>
+                <a href="#events" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium">Events</a>
+                <a href="#join" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium">Join Us</a>
+                <a href="#contact" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-mauve-wine hover:text-rose-tan flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-2">
+                    <a href="#home" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium py-2">Home</a>
+                    <a href="#about" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium py-2">About</a>
+                    <a href="#projects" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium py-2">Projects</a>
+                    <a href="#events" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium py-2">Events</a>
+                    <a href="#join" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium py-2">Join Us</a>
+                    <a href="#contact" class="text-mauve-wine hover:text-rose-tan transition-colors font-medium py-2">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-16 min-h-screen flex items-center relative overflow-hidden">
+        <div class="absolute inset-0 luxury-gradient opacity-20"></div>
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');">
+            <div class="absolute inset-0 bg-mauve-wine-dark opacity-60"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    Rotaract Club of
+                    <span class="bg-gradient-to-r from-rose-tan to-luxury-gold bg-clip-text text-transparent">
+                        Bibwewadi Pune
+                    </span>
+                </h1>
+                <p class="text-xl md:text-2xl text-luxury-cream mb-8 font-medium">
+                    From solos to symphony
+                </p>
+                <p class="text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Join us in creating positive change and impacting lives through service, leadership, and community engagement.
+                </p>
+                <a href="#join" class="inline-block luxury-gradient hover:opacity-90 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 hover-scale luxury-shadow">
+                    Join Our Mission
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-mauve-wine mb-4">Who We Are</h2>
+                <div class="w-24 h-1 luxury-gradient mx-auto mb-8"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+                <div>
+                    <h3 class="text-2xl font-semibold text-mauve-wine mb-6">About Rotaract</h3>
+                    <p class="text-mauve-wine-light mb-6 leading-relaxed">
+                        Rotaract is a youth organization of Rotary International for young and aspiring leaders (typically 18-30) who wish to grow their network and develop themselves both professionally and personally.
+                    </p>
+                    <p class="text-mauve-wine-light mb-6 leading-relaxed">
+                        The Rotaract Club of Bibwewadi Pune is committed to making a difference in our local community while fostering leadership, fellowship, and service among young professionals.
+                    </p>
+                    <p class="text-mauve-wine-light leading-relaxed">
+                        We work across five main avenues: Professional Development, Community Service, Club Service, International Service, and Diversity, Equity & Inclusivity.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gradient-to-br from-rose-tan to-rose-tan-dark p-6 rounded-xl text-white text-center luxury-shadow">
+                        <h4 class="font-semibold mb-2">Professional Development</h4>
+                        <p class="text-sm opacity-90">Building careers and skills</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-mauve-wine to-mauve-wine-dark p-6 rounded-xl text-white text-center luxury-shadow">
+                        <h4 class="font-semibold mb-2">Community Service</h4>
+                        <p class="text-sm opacity-90">Serving our local community</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-luxury-gold to-rose-tan p-6 rounded-xl text-white text-center luxury-shadow">
+                        <h4 class="font-semibold mb-2">International Service</h4>
+                        <p class="text-sm opacity-90">Global impact initiatives</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-rose-tan-light to-mauve-wine-light p-6 rounded-xl text-white text-center luxury-shadow">
+                        <h4 class="font-semibold mb-2">Club Service</h4>
+                        <p class="text-sm opacity-90">Strengthening our club</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Board of Directors Section - Dynamically populated by JavaScript -->
+            <div class="text-center mb-12">
+                <h3 class="text-2xl md:text-3xl font-bold text-mauve-wine mb-4">Board of Directors - RIY 2025-2026</h3>
+                <p class="text-mauve-wine-light">Meet the dedicated leaders driving our mission forward</p>
+            </div>
+
+            <div id="board-members-container" class="grid md:grid-cols-2 gap-8">
+                <!-- Board members will be dynamically populated here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-luxury-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-mauve-wine mb-4">Making a Difference in Our Community</h2>
+                <div class="w-24 h-1 luxury-gradient mx-auto mb-8"></div>
+                <p class="text-mauve-wine-light max-w-2xl mx-auto">
+                    Our impactful projects address real community needs and create lasting positive change.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-white rounded-xl luxury-shadow overflow-hidden hover-scale">
+                    <div class="h-48 bg-gradient-to-br from-rose-tan to-rose-tan-dark"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-mauve-wine mb-3">Project Annapurna</h3>
+                        <p class="text-mauve-wine-light mb-4">
+                            Food Donation Drive providing nutritious meals to underprivileged communities across Bibwewadi area.
+                        </p>
+                        <div class="flex items-center text-rose-tan font-medium">
+                            <span>Learn More</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white rounded-xl luxury-shadow overflow-hidden hover-scale">
+                    <div class="h-48 bg-gradient-to-br from-mauve-wine to-mauve-wine-dark"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-mauve-wine mb-3">Skill Development Initiative</h3>
+                        <p class="text-mauve-wine-light mb-4">
+                            Empowering youth with essential skills through workshops and training programs for better employment opportunities.
+                        </p>
+                        <div class="flex items-center text-mauve-wine font-medium">
+                            <span>Learn More</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-white rounded-xl luxury-shadow overflow-hidden hover-scale">
+                    <div class="h-48 bg-gradient-to-br from-luxury-gold to-rose-tan"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-mauve-wine mb-3">Environmental Conservation</h3>
+                        <p class="text-mauve-wine-light mb-4">
+                            Tree plantation drives and environmental awareness campaigns to create a greener, sustainable future.
+                        </p>
+                        <div class="flex items-center text-luxury-gold font-medium">
+                            <span>Learn More</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="bg-white rounded-xl luxury-shadow overflow-hidden hover-scale">
+                    <div class="h-48 bg-gradient-to-br from-rose-tan-light to-mauve-wine-light"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-mauve-wine mb-3">Digital Literacy Program</h3>
+                        <p class="text-mauve-wine-light mb-4">
+                            Bridging the digital divide by teaching computer and internet skills to seniors and underserved communities.
+                        </p>
+                        <div class="flex items-center text-rose-tan-light font-medium">
+                            <span>Learn More</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-mauve-wine mb-4">Upcoming Events & Calendar</h2>
+                <div class="w-24 h-1 luxury-gradient mx-auto mb-8"></div>
+                <p class="text-mauve-wine-light max-w-2xl mx-auto">
+                    Stay updated with our exciting events and activities. Switch between calendar and list view.
+                </p>
+            </div>
+
+            <!-- View Toggle -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-luxury-cream p-1 rounded-lg luxury-shadow">
+                    <button id="list-view-btn" class="px-6 py-2 rounded-md text-mauve-wine font-medium transition-all duration-300 bg-white luxury-shadow">
+                        List View
+                    </button>
+                    <button id="calendar-view-btn" class="px-6 py-2 rounded-md text-mauve-wine-light font-medium transition-all duration-300">
+                        Calendar View
+                    </button>
+                </div>
+            </div>
+
+            <!-- List View -->
+            <div id="list-view" class="max-w-4xl mx-auto space-y-6">
+                <!-- Event 1 -->
+                <div class="glass-effect rounded-xl p-6 lg:p-8 hover-scale luxury-shadow">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-gradient-to-r from-rose-tan to-rose-tan-dark text-white px-4 py-2 rounded-lg font-semibold text-sm luxury-shadow">
+                                    15 SEP 2024
+                                </div>
+                                <div class="ml-4 text-mauve-wine-light">
+                                    <span class="font-medium">6:00 PM - 8:00 PM</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-mauve-wine mb-3">Leadership Development Workshop</h3>
+                            <p class="text-mauve-wine-light mb-4 leading-relaxed">
+                                Interactive workshop on developing leadership skills and building effective teams. Perfect for young professionals looking to enhance their career prospects.
+                            </p>
+                            <p class="text-sm text-rose-tan font-medium">
+                                <span class="font-semibold">Location:</span> Community Center, Bibwewadi
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="glass-effect rounded-xl p-6 lg:p-8 hover-scale luxury-shadow">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-gradient-to-r from-mauve-wine to-mauve-wine-dark text-white px-4 py-2 rounded-lg font-semibold text-sm luxury-shadow">
+                                    22 SEP 2024
+                                </div>
+                                <div class="ml-4 text-mauve-wine-light">
+                                    <span class="font-medium">9:00 AM - 1:00 PM</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-mauve-wine mb-3">Community Clean-up Drive</h3>
+                            <p class="text-mauve-wine-light mb-4 leading-relaxed">
+                                Join us for a community service project focused on cleaning and beautifying our local parks and public spaces.
+                            </p>
+                            <p class="text-sm text-rose-tan font-medium">
+                                <span class="font-semibold">Location:</span> Bibwewadi Park
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="glass-effect rounded-xl p-6 lg:p-8 hover-scale luxury-shadow">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-gradient-to-r from-luxury-gold to-rose-tan text-white px-4 py-2 rounded-lg font-semibold text-sm luxury-shadow">
+                                    05 OCT 2024
+                                </div>
+                                <div class="ml-4 text-mauve-wine-light">
+                                    <span class="font-medium">7:00 PM - 9:00 PM</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-mauve-wine mb-3">Networking Night & Fellowship</h3>
+                            <p class="text-mauve-wine-light mb-4 leading-relaxed">
+                                An evening of networking, fellowship, and fun activities. Connect with like-minded individuals and build lasting friendships.
+                            </p>
+                            <p class="text-sm text-rose-tan font-medium">
+                                <span class="font-semibold">Location:</span> Hotel Pune, Bibwewadi
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendar-view" class="hidden max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Calendar -->
+                    <div class="lg:col-span-2">
+                        <div class="glass-effect rounded-xl p-6 luxury-shadow">
+                            <!-- Calendar Header -->
+                            <div class="flex items-center justify-between mb-6">
+                                <button id="prev-month" class="p-2 text-mauve-wine hover:text-rose-tan transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </button>
+                                <h3 id="current-month" class="text-2xl font-semibold text-mauve-wine">September 2024</h3>
+                                <button id="next-month" class="p-2 text-mauve-wine hover:text-rose-tan transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Calendar Grid -->
+                            <div class="calendar-grid mb-4">
+                                <div class="text-center font-semibold text-mauve-wine py-3">Sun</div>
+                                <div class="text-center font-semibold text-mauve-wine py-3">Mon</div>
+                                <div class="text-center font-semibold text-mauve-wine py-3">Tue</div>
+                                <div class="text-center font-semibold text-mauve-wine py-3">Wed</div>
+                                <div class="text-center font-semibold text-mauve-wine py-3">Thu</div>
+                                <div class="text-center font-semibold text-mauve-wine py-3">Fri</div>
+                                <div class="text-center font-semibold text-mauve-wine py-3">Sat</div>
+                            </div>
+                            <div id="calendar-days" class="calendar-grid">
+                                <!-- Calendar days will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Details Panel -->
+                    <div class="lg:col-span-1">
+                        <div class="glass-effect rounded-xl p-6 luxury-shadow">
+                            <h4 class="text-xl font-semibold text-mauve-wine mb-4">Event Details</h4>
+                            <div id="event-details">
+                                <p class="text-mauve-wine-light text-center py-8">
+                                    Click on a date with events to see details
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Us Section -->
+    <section id="join" class="py-20 luxury-gradient text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-mauve-wine-dark opacity-50"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Become a Part of the Family</h2>
+                <div class="w-24 h-1 bg-luxury-gold mx-auto mb-8"></div>
+                <p class="text-luxury-cream max-w-2xl mx-auto">
+                    Join a community of passionate young leaders committed to making a difference through service and fellowship.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Benefits -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8">Why Join Rotaract?</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-rose-tan rounded-full flex items-center justify-center mr-4 mt-1 luxury-shadow">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Professional Development</h4>
+                                <p class="text-luxury-cream opacity-90">Enhance your leadership skills, public speaking, and project management abilities.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-mauve-wine-light rounded-full flex items-center justify-center mr-4 mt-1 luxury-shadow">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Networking Opportunities</h4>
+                                <p class="text-luxury-cream opacity-90">Connect with professionals, entrepreneurs, and leaders across various industries.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-luxury-gold rounded-full flex items-center justify-center mr-4 mt-1 luxury-shadow">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Community Impact</h4>
+                                <p class="text-luxury-cream opacity-90">Make a meaningful difference in your community through service projects.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-rose-tan-light rounded-full flex items-center justify-center mr-4 mt-1 luxury-shadow">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Lifelong Friendships</h4>
+                                <p class="text-luxury-cream opacity-90">Build lasting relationships with like-minded individuals who share your values.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="glass-effect rounded-xl p-8 text-mauve-wine luxury-shadow">
+                    <h3 class="text-2xl font-semibold mb-6 text-center">Express Your Interest</h3>
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-mauve-wine-dark mb-2">Full Name</label>
+                            <input type="text" class="w-full px-4 py-3 border border-rose-tan-light rounded-lg focus:ring-2 focus:ring-rose-tan focus:border-transparent transition-all" placeholder="Enter your full name">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-mauve-wine-dark mb-2">Email Address</label>
+                            <input type="email" class="w-full px-4 py-3 border border-rose-tan-light rounded-lg focus:ring-2 focus:ring-rose-tan focus:border-transparent transition-all" placeholder="Enter your email">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-mauve-wine-dark mb-2">Phone Number</label>
+                            <input type="tel" class="w-full px-4 py-3 border border-rose-tan-light rounded-lg focus:ring-2 focus:ring-rose-tan focus:border-transparent transition-all" placeholder="Enter your phone number">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-mauve-wine-dark mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 border border-rose-tan-light rounded-lg focus:ring-2 focus:ring-rose-tan focus:border-transparent transition-all" placeholder="Tell us why you're interested in joining Rotaract..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-rose-tan to-mauve-wine hover:from-rose-tan-dark hover:to-mauve-wine-dark text-white font-semibold py-3 rounded-lg transition-all duration-300 luxury-shadow">
+                            I'm Interested!
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact" class="bg-mauve-wine-dark text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- Club Info -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 luxury-gradient rounded-full flex items-center justify-center luxury-shadow">
+                            <span class="text-white font-bold text-xl">R</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Rotaract Club Bibwewadi</h3>
+                            <p class="text-rose-tan-light text-sm">From solos to symphony</p>
+                        </div>
+                    </div>
+                    <p class="text-luxury-cream leading-relaxed">
+                        Creating positive change through service, leadership, and fellowship in the Bibwewadi community and beyond.
+                    </p>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Contact Information</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-rose-tan mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                            <span class="text-luxury-cream">rotaractbibwewadi@example.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-rose-tan mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                            </svg>
+                            <span class="text-luxury-cream">+91 XXXXX XXXXX</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-rose-tan mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-luxury-cream">Bibwewadi, Pune, Maharashtra</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gradient-to-br from-rose-tan to-rose-tan-dark rounded-full flex items-center justify-center hover-scale luxury-shadow transition-all">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gradient-to-br from-mauve-wine to-mauve-wine-dark rounded-full flex items-center justify-center hover-scale luxury-shadow transition-all">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gradient-to-br from-luxury-gold to-rose-tan rounded-full flex items-center justify-center hover-scale luxury-shadow transition-all">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.748-1.378 0 0-.599 2.282-.744 2.840-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gradient-to-br from-rose-tan-light to-mauve-wine-light rounded-full flex items-center justify-center hover-scale luxury-shadow transition-all">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-mauve-wine mt-12 pt-8 text-center">
+                <p class="text-luxury-cream">&copy; 2024 Rotaract Club of Bibwewadi Pune. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/content-loader.js"></script>
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Form submission handler
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your interest! We will get back to you soon.');
+            form.reset();
+        });
+
+        // Events Calendar Functionality
+        const listViewBtn = document.getElementById('list-view-btn');
+        const calendarViewBtn = document.getElementById('calendar-view-btn');
+        const listView = document.getElementById('list-view');
+        const calendarView = document.getElementById('calendar-view');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        const currentMonthElement = document.getElementById('current-month');
+        const calendarDaysElement = document.getElementById('calendar-days');
+        const eventDetailsElement = document.getElementById('event-details');
+
+        // Sample events data (will be overridden by content loader)
+        window.events = {
+            '2024-09-15': {
+                title: 'Leadership Development Workshop',
+                time: '6:00 PM - 8:00 PM',
+                location: 'Community Center, Bibwewadi',
+                description: 'Interactive workshop on developing leadership skills and building effective teams.',
+                color: 'from-rose-tan to-rose-tan-dark'
+            },
+            '2024-09-22': {
+                title: 'Community Clean-up Drive',
+                time: '9:00 AM - 1:00 PM',
+                location: 'Bibwewadi Park',
+                description: 'Join us for a community service project focused on cleaning and beautifying our local parks.',
+                color: 'from-mauve-wine to-mauve-wine-dark'
+            },
+            '2024-10-05': {
+                title: 'Networking Night & Fellowship',
+                time: '7:00 PM - 9:00 PM',
+                location: 'Hotel Pune, Bibwewadi',
+                description: 'An evening of networking, fellowship, and fun activities.',
+                color: 'from-luxury-gold to-rose-tan'
+            }
+        };
+
+        let currentDate = new Date();
+        
+        // View toggle functionality
+        listViewBtn.addEventListener('click', () => {
+            listView.classList.remove('hidden');
+            calendarView.classList.add('hidden');
+            listViewBtn.classList.add('bg-white', 'luxury-shadow');
+            listViewBtn.classList.remove('text-mauve-wine-light');
+            listViewBtn.classList.add('text-mauve-wine');
+            calendarViewBtn.classList.remove('bg-white', 'luxury-shadow');
+            calendarViewBtn.classList.add('text-mauve-wine-light');
+            calendarViewBtn.classList.remove('text-mauve-wine');
+        });
+
+        calendarViewBtn.addEventListener('click', () => {
+            listView.classList.add('hidden');
+            calendarView.classList.remove('hidden');
+            calendarViewBtn.classList.add('bg-white', 'luxury-shadow');
+            calendarViewBtn.classList.remove('text-mauve-wine-light');
+            calendarViewBtn.classList.add('text-mauve-wine');
+            listViewBtn.classList.remove('bg-white', 'luxury-shadow');
+            listViewBtn.classList.add('text-mauve-wine-light');
+            listViewBtn.classList.remove('text-mauve-wine');
+            generateCalendar();
+        });
+
+        // Calendar navigation
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar();
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar();
+        });
+
+        window.generateCalendar = function() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            currentMonthElement.textContent = `${monthNames[month]} ${year}`;
+            
+            // Clear previous calendar
+            calendarDaysElement.innerHTML = '';
+            
+            // Get first day of month and days in month
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            // Add empty cells for days before month starts
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayElement = createDayElement(daysInPrevMonth - i, true);
+                calendarDaysElement.appendChild(dayElement);
+            }
+            
+            // Add days of current month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = createDayElement(day, false);
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                if (window.events[dateStr]) {
+                    dayElement.classList.add('has-event');
+                    dayElement.addEventListener('click', () => showEventDetails(window.events[dateStr]));
+                }
+                
+                calendarDaysElement.appendChild(dayElement);
+            }
+            
+            // Add empty cells for days after month ends
+            const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+            const remainingCells = totalCells - (firstDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayElement = createDayElement(day, true);
+                calendarDaysElement.appendChild(dayElement);
+            }
+        };
+        
+        function createDayElement(day, isOtherMonth) {
+            const dayElement = document.createElement('div');
+            dayElement.className = `calendar-day ${isOtherMonth ? 'other-month' : ''}`;
+            dayElement.textContent = day;
+            return dayElement;
+        }
+        
+        function showEventDetails(event) {
+            eventDetailsElement.innerHTML = `
+                <div class="border-l-4 border-rose-tan pl-4 mb-4">
+                    <h5 class="font-semibold text-mauve-wine mb-2">${event.title}</h5>
+                    <p class="text-sm text-mauve-wine-light mb-2">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        ${event.time}
+                    </p>
+                    <p class="text-sm text-mauve-wine-light mb-3">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        ${event.location}
+                    </p>
+                    <p class="text-sm text-mauve-wine-light leading-relaxed">${event.description}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
