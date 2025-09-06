@@ -16,12 +16,12 @@ function initGitHubConfig() {
     // For now, we'll hardcode the values since environment variables in Vercel
     // are not directly accessible in client-side JavaScript
     // You'll need to provide your token here temporarily for testing
-    GITHUB_CONFIG.token = 'YOUR_NEW_FRESH_TOKEN_HERE'; // Replace with your new GitHub token
+    GITHUB_CONFIG.token = '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'; // Replace with your new GitHub token
     GITHUB_CONFIG.owner = 'RCBibwewadi'; // Your GitHub username
     GITHUB_CONFIG.repo = 'web'; // Your repo name
     
     // Check if token is still placeholder
-    if (GITHUB_CONFIG.token === 'YOUR_NEW_FRESH_TOKEN_HERE' || !GITHUB_CONFIG.token) {
+    if (GITHUB_CONFIG.token === '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' || !GITHUB_CONFIG.token) {
         console.warn('⚠️ GitHub token not configured properly');
         return false;
     }
