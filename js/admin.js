@@ -13,20 +13,35 @@ const GITHUB_CONFIG = {
 
 // Initialize GitHub config (you'll set this up in Vercel environment variables)
 function initGitHubConfig() {
-    // For now, we'll hardcode the values since environment variables in Vercel
-    // are not directly accessible in client-side JavaScript
-    // You'll need to provide your token here temporarily for testing
-    GITHUB_CONFIG.token = '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'; // New GitHub token - updated
+    // Get token from user input or environment
+    // For security, we'll prompt for the token when needed
+    if (!GITHUB_CONFIG.token) {
+        // You'll need to set this token via the browser console for security
+        console.warn('⚠️ GitHub token not configured. Use setGitHubToken("your_token") in console.');
+        return false;
+    }
+    
     GITHUB_CONFIG.owner = 'RCBibwewadi'; // Your GitHub username
     GITHUB_CONFIG.repo = 'web'; // Your repo name
     
-    // Check if token is still placeholder
-    if (GITHUB_CONFIG.token === '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' || !GITHUB_CONFIG.token) {
-        console.warn('⚠️ GitHub token not configured properly');
-        return false;
-    }
     return true;
 }
+
+// Secure function to set GitHub token (call from browser console)
+function setGitHubToken(token) {
+    if (!token || !token.startsWith('ghp_')) {
+        console.error('❌ Invalid token format. Token should start with "ghp_"');
+        return false;
+    }
+    
+    GITHUB_CONFIG.token = token;
+    console.log('✅ GitHub token configured successfully!');
+    console.log('🧪 You can now test with: testGitHubToken()');
+    return true;
+}
+
+// Make it globally available
+window.setGitHubToken = setGitHubToken;
 
 // Test GitHub token function - call testGitHubToken() in browser console
 async function testGitHubToken() {
