@@ -41,7 +41,7 @@
       "name": "President",
       "position": "President",
       "description": "Leading with Vision",
-      "image": "",
+      "image": "./data/images/seha.jpeg",
       "gradient": "from-rose-tan to-rose-tan-dark",
       "initial": "P"
     },
@@ -77,7 +77,7 @@
       "name": "Vice President",
       "position": "Vice President",
       "description": "Supporting Excellence",
-      "image": "",
+      "image": "./data/images/Jayendra.jpeg",
       "gradient": "from-mauve-wine to-mauve-wine-dark",
       "initial": "VP"
     },
@@ -86,7 +86,7 @@
       "name": "Club Mentor",
       "position": "Club Mentor",
       "description": "Financial Stewardship",
-      "image": "",
+      "image": "./data/images/Disha.jpeg",
       "gradient": "from-rose-tan-light to-mauve-wine-light",
       "initial": "CM"
     },
