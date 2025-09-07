@@ -86,7 +86,7 @@
       "name": "Club Mentor",
       "position": "Club Mentor",
       "description": "Financial Stewardship",
-      "image": "./data/images/.jpeg",
+      "image": "",
       "gradient": "from-rose-tan-light to-mauve-wine-light",
       "initial": "CM"
     },
