@@ -1,6 +1,6 @@
 {
   "hero": {
-    "backgroundImage": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
+    "backgroundImage": "./data/images/main.jpeg",
     "title": "Rotaract Club of Bibwewadi Pune",
     "subtitle": "From solos to symphony",
     "description": "Join us in creating positive change and impacting lives through service, leadership, and community engagement.",
@@ -68,7 +68,7 @@
       "name": "Treasurer",
       "position": "Treasurer",
       "description": "Financial Stewardship",
-      "image": "",
+      "image": "./data/images/ansh.jpeg",
       "gradient": "from-rose-tan-light to-mauve-wine-light",
       "initial": "T"
     }
