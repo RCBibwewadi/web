@@ -41,7 +41,7 @@
       "name": "President",
       "position": "President",
       "description": "Leading with Vision",
-      "image": "./data/images/seha.jpeg",
+      "image": "./data/images/Seha.jpeg",
       "gradient": "from-rose-tan to-rose-tan-dark",
       "initial": "P"
     },
